@@ -11,28 +11,26 @@ extends Node2D
 # Each level can either be colored or turned invisible 
 # However, we need to keep in track the state of the containers. -> Create a class for container?
 
-@onready var ColorBox = $ColorBox
+var containers:Array[StaticBody2D] = []
 
-#var colors = {
-	#Color.RED: "RED",
-	##Color.BLUE: "BLUE",
-	##Color.GREEN: "GREEN",
-	##Color.YELLOW: "YELLOW",
-	##Color.ORANGE: "ORANGE",
-	#Color.PURPLE: "PURPLE",
-	#Color.CYAN: "CYAN"
-#}
-
-func _ready():
-	#ColorBox.get_child(1).color = colors.keys()[randi() % colors.size()]
-	
+func _ready():	
+	var base_container: StaticBody2D = get_parent().get_node("Node2D/Container")
+	containers.append(base_container)
+	base_container.clicked.connect(_on_container_clicked)
 	var container2 = get_parent().get_node("Node2D/Container").duplicate()
 	container2.position.x = 200
 	add_child(container2)
+	containers.append(container2)
+	container2.clicked.connect(_on_container_clicked)
 	
 	var container3 = get_parent().get_node("Node2D/Container").duplicate()
 	container3.position.x = 400
 	add_child(container3)
-	
-	
+	container3.clicked.connect(_on_container_clicked)
+	containers.append(container3)
 	pass
+	
+func _on_container_clicked(container:StaticBody2D):
+	print("ROOT detected click on:", container)
+	print("Index in array:", containers.find(container))
+	
