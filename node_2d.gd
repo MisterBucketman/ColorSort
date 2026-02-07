@@ -28,9 +28,11 @@ func _ready():
 	add_child(container3)
 	container3.clicked.connect(_on_container_clicked)
 	containers.append(container3)
+	emit_signal("containers")
 	pass
-	
+
 func _on_container_clicked(container:StaticBody2D):
 	print("ROOT detected click on:", container)
 	print("Index in array:", containers.find(container))
-	
+
+		
